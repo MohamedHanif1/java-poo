@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://wwww.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/5.2.0/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
+    <meta charset="utf-8">
+    <title>Products List</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <li class="nav-item" >
+        <img th:src="@{/images/mylogo.png}"  />
+    </li>
+    <ul class="navbar-nav">
+        <li  class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle "  th:href="@{/patientList}"  data-bs-toggle="dropdown" role="button" >
+                Patients</a>
+            <ul class="dropdown-menu">
+                <li th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_MEDECIN'')')}">
+                <a class="dropdown-item" th:href="@{/createPatient}">Nouveau</a></li>
+                <li><a  class="dropdown-item" th:href="@{/patientList}">List</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="navbar-nav">
+        <li  class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"  data-bs-toggle="dropdown" role="button" th:text="${#authentication.name}" >[Username]</a>
+
+            <ul class="dropdown-menu">
+                <li>
+                    <a  sec:authorize="!isAuthenticated()" class="dropdown-item" href="#">Login</a>
+                </li>
+                <li>
+                    <form method="post" th:action="@{/logout}">
+                        <button sec:authorize="isAuthenticated()" class="dropdown-item" type="submit"> Logout</button>
+                    </form>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#">Profile </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+            <!-- <ul class="dropdown-menu" >
+               <li>
+                   <a class="dropdown-item" href="#">Login</a>
+               </li>
+                <li>
+                    <form method="post" th:href="@{/logout}">
+                        <button class="dropdown-item" type="submit"> Logout</button>
+                    </form>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#">Profile </a>
+                </li>
+            </ul>
+            -->
+        </li>
+    </ul>
+</nav>
+
+        <div layout:fragment="content">
+
+
+        </div>
+
+
+<footer class="text-center text-white fixed-bottom" style="background-color: #21081a;">
+    <div class="container p-4"></div>
+
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2023 Copyright:
+        <a class="text-white" href="createPatient">Patient Creation</a>
+    </div>
+</footer>
+
+</body>
+</html>
+
+
+

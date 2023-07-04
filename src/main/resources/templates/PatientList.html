@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:layout="http://wwww.ultraq.net.nz/thymleaf/layout"
+      layout:decorate="Template.html" >
+<head>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
+    <meta charset="utf-8">
+    <title>Products List</title>
+</head>
+<body>
+<!--
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link disabled"
+                    >Disabled</a
+                    >
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    -->
+
+
+<div layout:fragment="content">
+
+<main>
+    <div class=" container mt-2 " >
+    <div class="card">
+        <div class="card-header">LISTE DES PATIENTS</div>
+        <div class="card-body">
+            <div>
+
+                <form class="form-inline my-2 my-lg-0" method="get" th:action="@{/user/index}">
+                    <input type="text" name="keyword" th:value="${keyword}" placeholder="chercher un patient">
+                    <button class="btn btn-outline-info" type="submit">Rechercher</button>
+                </form>
+            </div>
+
+            <table class="table table-hover" >
+        <thead class="table-dark">
+        <tr >
+            <th >Id</th>
+            <th >Nom</th>
+            <th >Malade</th>
+            <th >Supprimer</th>
+            <th >Modifier</th>
+
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="patient:${patientJsp}">
+                <td th:text="${patient.id}"></td>
+                <td th:text="${patient.nom}"></td>
+                <td th:text="${patient.malade}"></td>
+
+
+                <td th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+                    <a onclick="return confirm('Are you sure you want to delete this item ? ')" class="btn btn-danger" th:href="@{deletePatient(id=${patient.id},
+                    page=${currentPage},
+                    size=${size}
+
+                    )}">
+                        Supprimer
+                    </a>
+                </td>
+              <td th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+                    <a class="btn btn-success" th:href="@{showPatient(id=${patient.id})}">
+                        Modifier
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+        </div>
+        <ul class="nav nav-pills">
+            <li th:each="page,status:${pages}">
+                <a th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
+                   th:href="@{patientList(page=${status.index},size=${size})}"
+                   th:text="${status.index}">
+
+                </a>
+            </li>
+        </ul>
+    </div>
+    </div>
+
+
+</main>
+  <!--  <footer class="text-center text-white fixed-bottom" style="background-color: #21081a;">
+        <div class="container p-4"></div>
+
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2023 Copyright:
+            <a class="text-white" href="createPatient">Patient Creation</a>
+        </div>
+    </footer>
+    -->
+</div>
+</body>
+</html>
+
+
+

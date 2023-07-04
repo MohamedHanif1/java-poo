@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      layout:decorate="Template.html"
+      xsi:schemaLocation="http://www.thymeleaf.org/extras/spring-security6 ">
+<head>
+    <meta charset="UTF-8">
+    <title>ERREUR </title>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+
+        <h1 class="text-danger">Vous n'etes pas autoriser à accéder à cette ressource</h1>
+      <div>
+          <img class="img-fluid" alt="Responsive image" th:src="@{/images/img.png}"  />
+      </div>
+
+
+    </div>
+</div>
+</body>
+</html>

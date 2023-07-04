@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Creation</title>
+</head>
+<body>
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-mdb-toggle="collapse"
+                data-mdb-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link disabled"
+                >Disabled</a
+                >
+            </div>
+        </div>
+    </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item" >
+            <a  class="nav-link" th:src="@{../static/images/mylogo.png}"/>
+        </li>
+        <li  class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle "  th:href="@{/patientList}"  data-bs-toggle="dropdown" role="button" >
+                Patients</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" th:href="@{/createPatient}">Nouveau</a></li>
+                <li><a  class="dropdown-item" th:href="@{/patientList}">List</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class=" navbar-nav">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" >
+                [Username]
+            </a>
+            <ul class="dropdown-menu" >
+                <a class="dropdown-item" href="#">Login</a>
+                <a class="dropdown-item" href="#">Logout </a>
+                <a class="dropdown-item" href="#">Profile </a>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<main>
+    <!-- <div layout:fragment="content1"> <-->
+        <div class="col-md-6 offset-3">
+    <form th:action="@{savePatient}" method="post">
+        <div>
+            <label for="namePatient">Patient Name : </label>
+            <input class="form-control" type="text" id="namePatient" name="nom">
+        </div>
+        <div>
+            <label for="dateBirth">Birth : </label>
+            <input class="form-control" type="date" id="dateBirth" name="dateNaissance" value="${now}">
+        </div>
+        <div>
+            <label for="adressPatient">Adress : </label>
+            <input class="form-control" type="text" id="adressPatient" name="adresse">
+        </div>
+        <div>
+            <label for="CodePostal">CodePostal : </label>
+            <input class="form-control" type="text" id="CodePostal" name="codePostal">
+        </div>
+        <div>
+            <label for="phonePatient">Phone Number : </label>
+            <input class="form-control" type="text" id="phonePatient" name="numeroTelephone">
+        </div>
+        <div>
+            <label for="sicknessPatient">Sickness : </label>
+            <input type="checkbox" id="sicknessPatient" name="malade">
+        </div>
+
+
+        <div>
+            <input type="submit" class="btn btn-primary" value="Save">
+        </div>
+    </form>
+        </div>
+    </div>
+</main>
+<footer class="text-center text-white fixed-bottom" style="background-color: #21081a;">
+    <div class="container p-4"></div>
+
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2023 Copyright:
+        <a class="text-white" href="patientList">Patient List</a>
+    </div>
+</footer>
+
+
+</body>
+</html>
+
