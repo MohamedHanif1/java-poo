@@ -1,10 +1,7 @@
 package com.example.PROJETSPRING.Model;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import lombok.Getter;
@@ -30,7 +27,13 @@ public class Fournisseur {
     private String email;
 
     private String telephone;
-
-    @OneToMany(mappedBy = "fournisseur")
-    private Set<Produit> produits;
+    @ManyToMany
+    @JoinTable(
+            name = "fournisseur_produit",
+            joinColumns = @JoinColumn(name = "fournisseur_id"),
+            inverseJoinColumns = @JoinColumn(name = "produit_id"))
+    private Set<Produit> produits = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
 }

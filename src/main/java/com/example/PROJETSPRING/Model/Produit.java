@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,6 +21,11 @@ public class Produit {
     private String nom;
     private String description;
     private BigDecimal prix;
+    @ManyToMany(mappedBy = "produits")
+    private Set<Commande> commandes = new HashSet<>();
+    @ManyToMany(mappedBy = "produits")
+    private Set<Fournisseur> fournisseurs = new HashSet<>();
     @ManyToOne
-    private Fournisseur fournisseur;
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
 }

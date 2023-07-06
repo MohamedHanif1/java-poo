@@ -3,6 +3,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,7 @@ public class Client {
     private String telephone;
 
     @OneToMany(mappedBy = "client")
-    private Set<Commande> commandes;
+    private Set<Commande> commandes = new HashSet<>();
+
 }
 
