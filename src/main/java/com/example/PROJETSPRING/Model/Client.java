@@ -20,9 +20,10 @@ public class Client {
     private String adresse;
     private String email;
     private String telephone;
+    public String Password;
 
     @OneToMany(mappedBy = "client")
     private Set<Commande> commandes = new HashSet<>();
 
-}
 
+}
