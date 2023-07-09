@@ -27,6 +27,7 @@ public class Fournisseur {
     private String email;
 
     private String telephone;
+    public String Password;
     @ManyToMany
     @JoinTable(
             name = "fournisseur_produit",
