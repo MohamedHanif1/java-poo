@@ -1,4 +1,5 @@
 package com.example.PROJETSPRING.Model;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Commande {
+@AllArgsConstructor
+public class Command {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,10 +21,10 @@ public class Commande {
 
     @ManyToMany
     @JoinTable(
-            name = "commande_produit",
-            joinColumns = @JoinColumn(name = "commande_id"),
-            inverseJoinColumns = @JoinColumn(name = "produit_id"))
-    private Set<Produit> produits = new HashSet<>();
+            name = "command_product",
+            joinColumns = @JoinColumn(name = "command_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Set<Product> products = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
@@ -31,7 +33,7 @@ public class Commande {
     private Stock stock;
 
     @ElementCollection
-    private Map<Produit, Integer> produit;
+    private Map<Product, Integer> produit;
 
     private String status;
 }

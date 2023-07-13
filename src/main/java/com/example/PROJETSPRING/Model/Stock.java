@@ -1,4 +1,5 @@
 package com.example.PROJETSPRING.Model;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Stock {
 
     @Id
@@ -18,13 +20,13 @@ public class Stock {
     private Long id;
 
     @ElementCollection
-    private Map<Produit, Integer> produits;
+    private Map<Product, Integer> products;
     @OneToMany(mappedBy = "stock")
-    private Set<Commande> commandes = new HashSet<>();
+    private Set<Command> commands = new HashSet<>();
     @OneToMany(mappedBy = "stock")
-    private Set<Produit> produit = new HashSet<>();
+    private Set<Product> product = new HashSet<>();
     @OneToMany(mappedBy = "stock")
-    private Set<Fournisseur> fournisseur = new HashSet<>();
-    private String emplacement;
+    private Set<Provider> provider = new HashSet<>();
+    private String location;
 
 }
