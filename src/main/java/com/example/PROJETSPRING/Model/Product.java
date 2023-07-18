@@ -1,8 +1,11 @@
 package com.example.PROJETSPRING.Model;
+import com.example.PROJETSPRING.Commands.ProductCommand;
+import com.example.PROJETSPRING.Commands.ProviderCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.access.method.P;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -30,4 +33,19 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "stock_id")
     private Stock stock;
+
+
+    public static Product create (ProductCommand productCommand) {
+        Product product = new Product();
+        product.name = productCommand.getName();
+        product.description = productCommand.getDescription();
+        product.price = productCommand.getPrice();
+        return product;
+    }
+
+    public void update (ProductCommand productCommand) {
+        this.name = productCommand.getName();
+        this.description = productCommand.getDescription();
+        this.price = productCommand.getPrice();
+    }
 }

@@ -1,15 +1,19 @@
 package com.example.PROJETSPRING.Controller;
 
+import com.example.PROJETSPRING.Commands.ProviderCommand;
 import com.example.PROJETSPRING.Constant.ApiPaths;
 import com.example.PROJETSPRING.DTO.ProviderDTO;
 import com.example.PROJETSPRING.Mapper.ProviderMapper;
 import com.example.PROJETSPRING.Model.Provider;
 import com.example.PROJETSPRING.Services.ProviderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,12 +27,9 @@ public class ProviderController {
 
 
     @GetMapping
-    public ResponseEntity<List<ProviderDTO>> getAllProviders() {
-        List<Provider> providers = providerService.getAllProviders();
-        List<ProviderDTO> providerDTOs = providers.stream()
-                .map(providerMapper::convertToDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(providerDTOs);
+    public ResponseEntity<Page<ProviderDTO>> getAllProviders(Pageable pageable) {
+
+        return ResponseEntity.ok(providerService.getAllProviders(pageable).map(providerMapper ::convertToDTO));
     }
 
     @GetMapping("/{id}")
@@ -43,20 +44,14 @@ public class ProviderController {
     }
 
     @PostMapping
-    public ResponseEntity<ProviderDTO> createProvider(@RequestBody ProviderDTO providerDTO) {
-        Provider provider = providerMapper.convertToEntity(providerDTO);
-        Provider savedProvider = providerService.createProvider(provider);
-        ProviderDTO savedProviderDTO = providerMapper.convertToDTO(savedProvider);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedProviderDTO);
+    public ResponseEntity<ProviderDTO> createProvider(@RequestBody ProviderCommand providerCommand) {
+        return ResponseEntity.ok(providerMapper.convertToDTO(providerService.createProvider(providerCommand)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProviderDTO> updateProvider(@PathVariable Long id, @RequestBody ProviderDTO providerDTO) {
-        Provider provider = providerMapper.convertToEntity(providerDTO);
-        provider.setId(id); // assurez-vous de fixer l'ID pour éviter la création d'une nouvelle entité
-        Provider updatedProvider = providerService.updateProvider(provider);
-        ProviderDTO updatedProviderDTO = providerMapper.convertToDTO(updatedProvider);
-        return ResponseEntity.ok(updatedProviderDTO);
+    public ResponseEntity<ProviderDTO> updateProvider
+            (@PathVariable Long id, @Valid @RequestBody ProviderCommand providerCommand) {
+        return ResponseEntity.ok(providerMapper.convertToDTO(providerService.updateProvider(id , providerCommand)));
     }
 
     @DeleteMapping("/{id}")

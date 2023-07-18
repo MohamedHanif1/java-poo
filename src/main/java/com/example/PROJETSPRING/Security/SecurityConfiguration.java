@@ -30,6 +30,7 @@ public class SecurityConfiguration extends SecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/client/**").hasAnyRole("ADMIN", "CLIENT")
+                .antMatchers("/provider/**").hasAnyRole("ADMIN", "PROVIDER")
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -41,6 +42,7 @@ public class SecurityConfiguration extends SecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 }

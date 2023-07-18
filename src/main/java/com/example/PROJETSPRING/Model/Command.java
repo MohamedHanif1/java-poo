@@ -1,4 +1,6 @@
 package com.example.PROJETSPRING.Model;
+import com.example.PROJETSPRING.Commands.ClientCommand;
+import com.example.PROJETSPRING.Commands.CommandCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,5 +38,20 @@ public class Command {
     private Map<Product, Integer> produit;
 
     private String status;
+
+    public static Command create (CommandCommand commandCommand) {
+        Command command= new Command();
+        command.client = commandCommand.getClient();
+        command.produit = commandCommand.getProduit();
+        command.stock = commandCommand.getStock();
+        command.status = commandCommand.getStatus();
+        return command;
+    }
+    public void update (CommandCommand commandCommand) {
+        this.client = commandCommand.getClient();
+        this.produit = commandCommand.getProduit();
+        this.stock = commandCommand.getStock();
+        this.status = commandCommand.getStatus();
+    }
 }
 

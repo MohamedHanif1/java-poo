@@ -1,7 +1,11 @@
 package com.example.PROJETSPRING.Services;
+import com.example.PROJETSPRING.Commands.CommandCommand;
+import com.example.PROJETSPRING.Exception.IdException;
 import com.example.PROJETSPRING.Model.Command;
 import com.example.PROJETSPRING.Repository.CommandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,27 +22,35 @@ public class CommandServiceImpl implements CommandService {
     }
 
     @Override
-    public List<Command> getCommandes() {
-        return commandRepository.findAll();
+    public Page<Command> getCommandes(Pageable pageable) {
+
+        return commandRepository.findAll(pageable);
     }
 
     @Override
-    public Optional<Command> getCommandeById(Long id) {
-        return commandRepository.findById(id);
+    public Command getCommandeById(Long id) {
+        Optional<Command> command = commandRepository.findById(id);
+        return command.orElse(null);
     }
 
-    @Override
-    public Command addCommande(Command command) {
-        return commandRepository.save(command);
+
+    public Command addCommande(CommandCommand commandCommand) {
+        Command command = Command.create(commandCommand);
+        return command;
     }
 
-    @Override
-    public Command updateCommande(Command command) {
+
+    public Command updateCommande(Long id ,CommandCommand commandCommand) {
+        Command command = commandRepository.findById(id)
+                .orElseThrow(() -> new IdException("Command not found with Id: " + id));
+        command.update(commandCommand);
         return commandRepository.save(command);
     }
 
     @Override
     public void deleteCommande(Long id) {
+        Command command = commandRepository.findById(id)
+                .orElseThrow(() -> new IdException("Command not found with Id: " + id));
         commandRepository.deleteById(id);
     }
 }

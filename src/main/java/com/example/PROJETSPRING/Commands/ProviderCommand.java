@@ -23,5 +23,7 @@ public class ProviderCommand {
     private final String phonenumber;
     @NotBlank
     private final Stock stock;
+    @NotBlank
+    private final String password;
 
 }

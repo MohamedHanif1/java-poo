@@ -50,4 +50,6 @@ public class ClientServiceImpl implements ClientService {
         public void deleteClient (Long id ){
            Client client = clientRepository.findById(id)
                    .orElseThrow(() -> new IdException("Client not found with customerId: " + id));
-}}
+           clientRepository.deleteById(id);
+    }
+}

@@ -29,4 +29,8 @@ public class Stock {
     private Set<Provider> provider = new HashSet<>();
     private String location;
 
+
+
+
+
 }

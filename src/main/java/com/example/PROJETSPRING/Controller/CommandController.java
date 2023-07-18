@@ -1,67 +1,59 @@
 package com.example.PROJETSPRING.Controller;
+import com.example.PROJETSPRING.Commands.CommandCommand;
 import com.example.PROJETSPRING.Constant.ApiPaths;
 import com.example.PROJETSPRING.DTO.CommandDTO;
 import com.example.PROJETSPRING.Mapper.CommandMapper;
 import com.example.PROJETSPRING.Model.Command;
 import com.example.PROJETSPRING.Services.CommandService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-
+@RequiredArgsConstructor
 @RequestMapping(ApiPaths.V1 + ApiPaths.COMMANDS)
 public class CommandController {
 
     private final CommandService commandService;
     private final CommandMapper commandMapper;
 
-    @Autowired
-    public CommandController(CommandService commandService, CommandMapper commandMapper) {
-        this.commandService = commandService;
-        this.commandMapper = commandMapper;
-    }
+
 
     @GetMapping
-    public ResponseEntity<List<CommandDTO>> getCommandes() {
-        List<Command> commands = commandService.getCommandes();
-        List<CommandDTO> commandDTOs = commands.stream()
-                .map(commandMapper::convertToDTO)
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(commandDTOs, HttpStatus.OK);
+    public ResponseEntity<Page<CommandDTO>> getCommandes (Pageable pageable) {
+
+        return ResponseEntity.ok(commandService.getCommandes(pageable).map(commandMapper ::convertToDTO));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CommandDTO> getCommandeById(@PathVariable Long id) {
-        Command command = commandService.getCommandeById(id)
-                .orElseThrow(() -> new RuntimeException("Commande not found"));
-        CommandDTO commandDTO = commandMapper.convertToDTO(command);
-        return new ResponseEntity<>(commandDTO, HttpStatus.OK);
+        Command command = commandService.getCommandeById(id);
+        if (command != null) {
+            return ResponseEntity.ok(commandMapper.convertToDTO(command));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
-    public ResponseEntity<CommandDTO> addCommande(@RequestBody CommandDTO commandDTO) {
-        Command command = commandMapper.convertToEntity(commandDTO);
-        Command newCommand = commandService.addCommande(command);
-        CommandDTO newCommandDTO = commandMapper.convertToDTO(newCommand);
-        return new ResponseEntity<>(newCommandDTO, HttpStatus.CREATED);
+    public ResponseEntity<CommandDTO> addCommande(@RequestBody CommandCommand commandCommand) {
+        return ResponseEntity.ok(commandMapper.convertToDTO(commandService.addCommande(commandCommand)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommandDTO> updateCommande(@PathVariable Long id, @RequestBody CommandDTO commandDTO) {
-        Command command = commandMapper.convertToEntity(commandDTO);
-        Command updatedCommand = commandService.updateCommande(command);
-        CommandDTO updatedCommandDTO = commandMapper.convertToDTO(updatedCommand);
-        return new ResponseEntity<>(updatedCommandDTO, HttpStatus.OK);
+    public ResponseEntity<CommandDTO> updateCommande
+            (@PathVariable Long id, @Valid @RequestBody CommandCommand commandCommand) {
+
+        return ResponseEntity.ok(commandMapper.convertToDTO(commandService.updateCommande( id , commandCommand)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCommande(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCommande(@PathVariable Long id) {
         commandService.deleteCommande(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }

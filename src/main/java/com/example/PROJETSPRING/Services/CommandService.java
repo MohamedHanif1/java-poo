@@ -1,13 +1,16 @@
 package com.example.PROJETSPRING.Services;
+import com.example.PROJETSPRING.Commands.CommandCommand;
 import com.example.PROJETSPRING.Model.Command;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CommandService {
-    List<Command> getCommandes();
-    Optional<Command> getCommandeById(Long id);
-    Command addCommande(Command command);
-    Command updateCommande(Command command);
+    Page<Command> getCommandes(Pageable pageable);
+    Command getCommandeById(Long id);
+    Command addCommande(CommandCommand commandCommand);
+    Command updateCommande(Long id , CommandCommand commandCommand);
     void deleteCommande(Long id);
 }

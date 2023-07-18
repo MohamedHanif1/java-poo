@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.example.PROJETSPRING.Commands.ClientCommand;
+import com.example.PROJETSPRING.Commands.ProviderCommand;
 import lombok.*;
 
 @Entity
@@ -36,4 +38,24 @@ public class Provider {
     @ManyToOne
     @JoinColumn(name = "stock_id")
     private Stock stock;
+
+    public static Provider create (ProviderCommand providerCommand) {
+        Provider provider = new Provider();
+        provider.name = providerCommand.getName();
+        provider.adress = providerCommand.getAdress();
+        provider.mail = providerCommand.getMail();
+        provider.phonenumber = providerCommand.getPhonenumber();
+        provider.Password = providerCommand.getPassword();
+        provider.stock = providerCommand.getStock();
+        return provider;
+    }
+
+    public void update (ProviderCommand providerCommand) {
+        this.name = providerCommand.getName();
+        this.adress = providerCommand.getAdress();
+        this.mail = providerCommand.getMail();
+        this.phonenumber = providerCommand.getPhonenumber();
+        this.Password = providerCommand.getPassword();
+        this.stock = providerCommand.getStock();
+    }
 }

@@ -23,6 +23,7 @@ public class ClientCommand {
     private final String mail;
     @NotBlank
     private final String phonenumber;
+    @NotBlank
     private final String password;
 
 
