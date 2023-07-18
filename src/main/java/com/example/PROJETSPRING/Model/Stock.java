@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +28,8 @@ public class Stock {
     private Set<Product> product = new HashSet<>();
     @OneToMany(mappedBy = "stock")
     private Set<Provider> provider = new HashSet<>();
+    private LocalDate expirationDate;
+    private int stockLevel;
     private String location;
 
 
