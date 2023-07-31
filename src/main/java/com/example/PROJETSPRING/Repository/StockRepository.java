@@ -14,7 +14,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
     List<Stock> findByProductId(Long productId);
 
     List<Stock> findByProviderId(Long providerId);
-    List<Stock> findByStockLevelLessThan(int threshold);
+
     @Query("SELECT s FROM Stock s WHERE s.expirationDate < CURRENT_DATE")
     List<Stock> findStocksWithExpiredProducts();
 }

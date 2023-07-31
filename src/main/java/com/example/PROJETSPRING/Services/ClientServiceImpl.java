@@ -1,6 +1,7 @@
 package com.example.PROJETSPRING.Services;
 
 import com.example.PROJETSPRING.Commands.ClientCommand;
+import com.example.PROJETSPRING.Exception.ErrorFactory;
 import com.example.PROJETSPRING.Exception.IdException;
 import com.example.PROJETSPRING.Model.Client;
 import com.example.PROJETSPRING.Repository.ClientRepository;
@@ -43,13 +44,13 @@ public class ClientServiceImpl implements ClientService {
 
     public Client updateClient(Long id, ClientCommand clientCommand) {
         Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new IdException("Client not found with customerId: " + id));
+                .orElseThrow(() -> new IdException(ErrorFactory.USER_NOT_FOUND.getExceptionPayload()));
         client.update(clientCommand);
         return clientRepository.save(client);
 }
         public void deleteClient (Long id ){
            Client client = clientRepository.findById(id)
-                   .orElseThrow(() -> new IdException("Client not found with customerId: " + id));
+                   .orElseThrow(() -> new IdException(ErrorFactory.USER_NOT_FOUND.getExceptionPayload()));
            clientRepository.deleteById(id);
     }
 }

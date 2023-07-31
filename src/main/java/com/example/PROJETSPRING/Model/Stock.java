@@ -29,7 +29,6 @@ public class Stock {
     @OneToMany(mappedBy = "stock")
     private Set<Provider> provider = new HashSet<>();
     private LocalDate expirationDate;
-    private int stockLevel;
     private String location;
 
 

@@ -1,5 +1,6 @@
 package com.example.PROJETSPRING.Services;
 import com.example.PROJETSPRING.Commands.CommandCommand;
+import com.example.PROJETSPRING.Exception.ErrorFactory;
 import com.example.PROJETSPRING.Exception.IdException;
 import com.example.PROJETSPRING.Model.Command;
 import com.example.PROJETSPRING.Repository.CommandRepository;
@@ -42,7 +43,7 @@ public class CommandServiceImpl implements CommandService {
 
     public Command updateCommande(Long id ,CommandCommand commandCommand) {
         Command command = commandRepository.findById(id)
-                .orElseThrow(() -> new IdException("Command not found with Id: " + id));
+                .orElseThrow(() -> new IdException(ErrorFactory.USER_NOT_FOUND.getExceptionPayload()));
         command.update(commandCommand);
         return commandRepository.save(command);
     }
@@ -50,7 +51,7 @@ public class CommandServiceImpl implements CommandService {
     @Override
     public void deleteCommande(Long id) {
         Command command = commandRepository.findById(id)
-                .orElseThrow(() -> new IdException("Command not found with Id: " + id));
+                .orElseThrow(() -> new IdException(ErrorFactory.USER_NOT_FOUND.getExceptionPayload()));
         commandRepository.deleteById(id);
     }
 }

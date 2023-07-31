@@ -3,6 +3,7 @@ package com.example.PROJETSPRING.Services;
 import com.example.PROJETSPRING.Commands.ClientCommand;
 import com.example.PROJETSPRING.DTO.ProductDTO;
 import com.example.PROJETSPRING.DTO.StockDTO;
+import com.example.PROJETSPRING.Exception.ErrorFactory;
 import com.example.PROJETSPRING.Exception.IdException;
 import com.example.PROJETSPRING.Mapper.ProductMapper;
 import com.example.PROJETSPRING.Mapper.StockMapper;
@@ -46,7 +47,7 @@ public class StockServiceImpl implements StockService {
             Stock stock = stockOptional.get();
             return stockMapper.toDTO(stock);
         } else {
-            throw new IdException("Stock not found with ID: " + id);
+            throw new IdException(ErrorFactory.USER_NOT_FOUND.getExceptionPayload());
         }
     }
 
@@ -67,14 +68,6 @@ public class StockServiceImpl implements StockService {
         Page<Stock> stockPage = stockRepository.findAll(pageable);
         return stockPage.map(stockMapper::toDTO);
     }
-
-
-
-
-
-
-
-
 
     @Override
     public void deleteStock(Long id) {

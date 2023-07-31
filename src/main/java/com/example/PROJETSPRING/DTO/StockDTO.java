@@ -11,6 +11,5 @@ public class StockDTO {
     private Long id;
     private Map<Long, Integer> products;
     private LocalDate expirationDate;
-    private int stockLevel;
     private String location;
 }

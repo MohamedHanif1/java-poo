@@ -2,6 +2,7 @@ package com.example.PROJETSPRING.Services;
 
 
 import com.example.PROJETSPRING.Commands.ProviderCommand;
+import com.example.PROJETSPRING.Exception.ErrorFactory;
 import com.example.PROJETSPRING.Exception.IdException;
 import com.example.PROJETSPRING.Model.Client;
 import com.example.PROJETSPRING.Model.Provider;
@@ -45,7 +46,7 @@ public class ProviderServiceImpl implements ProviderService {
 
     public Provider updateProvider(Long id , ProviderCommand providerCommand) {
         Provider provider = providerRepository.findById(id)
-                .orElseThrow(() -> new IdException("Provider not found with customerId: " + id));
+                .orElseThrow(() -> new IdException(ErrorFactory.USER_NOT_FOUND.getExceptionPayload()));
         provider.update(providerCommand);
         return providerRepository.save(provider);
     }
@@ -53,7 +54,7 @@ public class ProviderServiceImpl implements ProviderService {
 
     public void deleteProvider(Long id) {
         Provider provider = providerRepository.findById(id)
-                .orElseThrow(() -> new IdException("Provider not found with customerId: " + id));
+                .orElseThrow(() -> new IdException(ErrorFactory.USER_NOT_FOUND.getExceptionPayload()));
         providerRepository.deleteById(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.PROJETSPRING.Services;
 
 import com.example.PROJETSPRING.Commands.ProductCommand;
+import com.example.PROJETSPRING.Exception.ErrorFactory;
 import com.example.PROJETSPRING.Exception.IdException;
 import com.example.PROJETSPRING.Model.Product;
 import com.example.PROJETSPRING.Repository.ProductRepository;
@@ -38,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
     public Product updateProduct(Long id , ProductCommand productCommand){
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IdException("Product not found with customerId: " + id));
+                .orElseThrow(() -> new IdException(ErrorFactory.USER_NOT_FOUND.getExceptionPayload()));
         product.update(productCommand);
         return productRepository.save(product);
     }
